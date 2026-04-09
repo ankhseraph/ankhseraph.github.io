@@ -1,18 +1,18 @@
 const allowedPrefixes = ["projects/", "logbook/"];
 
 function escapeHtml(text) {
-  return text
-    .replaceAll("&", "&amp;")
-    .replaceAll("<", "&lt;")
-    .replaceAll(">", "&gt;")
-    .replaceAll('"', "&quot;")
-    .replaceAll("'", "&#39;");
+  return String(text)
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/\"/g, "&quot;")
+    .replace(/'/g, "&#39;");
 }
 
 function renderInline(text) {
   let html = escapeHtml(text);
-  html = html.replaceAll(/`([^`]+)`/g, "<code>$1</code>");
-  html = html.replaceAll(/\[([^\]]+)\]\(([^)]+)\)/g, (_m, label, url) => {
+  html = html.replace(/`([^`]+)`/g, "<code>$1</code>");
+  html = html.replace(/\[([^\]]+)\]\(([^)]+)\)/g, (_m, label, url) => {
     const safeUrl = escapeHtml(url);
     return `<a href="${safeUrl}">${escapeHtml(label)}</a>`;
   });
@@ -139,15 +139,35 @@ function renderMarkdown(markdown, { omitDescription = "" } = {}) {
 }
 
 function getRequestedFile() {
-  const params = new URLSearchParams(window.location.search);
-  const file = params.get("file") || "";
-  const normalized = file.replaceAll("\\", "/").replaceAll(/\/+/g, "/").replaceAll(/^\/+/, "");
+  try {
+    let file = "";
+    const search = String(window.location.search || "");
 
-  if (!normalized.endsWith(".md")) return null;
-  if (!allowedPrefixes.some((prefix) => normalized.startsWith(prefix))) return null;
-  if (normalized.includes("..")) return null;
+    if (typeof URLSearchParams !== "undefined") {
+      const params = new URLSearchParams(search);
+      file = params.get("file") || "";
+    } else if (search.startsWith("?")) {
+      const parts = search.slice(1).split("&");
+      for (const part of parts) {
+        const [rawKey, rawValue] = part.split("=");
+        const key = decodeURIComponent(rawKey || "");
+        if (key === "file") {
+          file = decodeURIComponent(rawValue || "");
+          break;
+        }
+      }
+    }
 
-  return normalized;
+    const normalized = String(file).replace(/\\/g, "/").replace(/\/+/g, "/").replace(/^\/+/, "");
+
+    if (!normalized.endsWith(".md")) return null;
+    if (!allowedPrefixes.some((prefix) => normalized.startsWith(prefix))) return null;
+    if (normalized.includes("..")) return null;
+
+    return normalized;
+  } catch (_error) {
+    return null;
+  }
 }
 
 async function main() {
@@ -187,4 +207,3 @@ main().catch((error) => {
   if (descEl) descEl.textContent = "Failed to render markdown.";
   if (bodyEl) bodyEl.innerHTML = `<pre><code>${escapeHtml(String(error?.stack || error))}</code></pre>`;
 });
-

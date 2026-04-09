@@ -1,10 +1,10 @@
 function escapeHtml(text) {
   return String(text)
-    .replaceAll("&", "&amp;")
-    .replaceAll("<", "&lt;")
-    .replaceAll(">", "&gt;")
-    .replaceAll('"', "&quot;")
-    .replaceAll("'", "&#39;");
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/\"/g, "&quot;")
+    .replace(/'/g, "&#39;");
 }
 
 function extractDescription(markdown) {
@@ -33,6 +33,19 @@ function sortFiles(kind, files) {
   return list.sort((a, b) => String(a).localeCompare(String(b)));
 }
 
+const hiddenFiles = new Set(["EXAMPLE.md"]);
+
+function isHiddenFile(name) {
+  const lower = String(name).toLowerCase();
+  return (
+    hiddenFiles.has(name) ||
+    lower.startsWith("_") ||
+    lower.startsWith("example") ||
+    lower.startsWith("sample") ||
+    lower.startsWith("template")
+  );
+}
+
 async function loadCards({ kind, containerId, basePath }) {
   const container = document.querySelector(containerId);
   if (!container) return;
@@ -44,7 +57,7 @@ async function loadCards({ kind, containerId, basePath }) {
     const indexResponse = await fetch(`${basePath}/index.json`, { cache: "no-store" });
     if (!indexResponse.ok) throw new Error(`index.json HTTP ${indexResponse.status}`);
     const indexJson = await indexResponse.json();
-    files = sortFiles(kind, indexJson);
+    files = sortFiles(kind, indexJson).filter((name) => !isHiddenFile(name));
   } catch (_error) {
     container.innerHTML = `<div class="muted">No ${escapeHtml(kind)} yet.</div>`;
     return;
