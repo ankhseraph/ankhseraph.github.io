@@ -1,13 +1,9 @@
 :root {
   color-scheme: dark;
-  --bg: #06030a;
-  --fg: #fbf7ff;
-  --muted: rgba(255, 255, 255, 0.72);
-  --border: rgba(255, 255, 255, 0.36);
-  --neon-a: #ff2bd6;
-  --neon-b: #21e6ff;
-  --neon-c: #b7ff2a;
-  --neon-d: #ff7a18;
+  --bg: #050505;
+  --fg: #f5f5f5;
+  --muted: #b0b0b0;
+  --border: #f5f5f5;
 }
 
 * {
@@ -16,40 +12,11 @@
 
 body {
   margin: 0;
-  background: radial-gradient(1200px 900px at 10% 10%, rgba(255, 43, 214, 0.45), transparent 55%),
-    radial-gradient(900px 700px at 90% 20%, rgba(33, 230, 255, 0.38), transparent 60%),
-    radial-gradient(900px 900px at 30% 95%, rgba(183, 255, 42, 0.28), transparent 55%),
-    radial-gradient(900px 700px at 85% 85%, rgba(255, 122, 24, 0.32), transparent 60%),
-    conic-gradient(from 40deg at 50% 50%, #1a0b2e, #0a0821, #1b0830, #08172a, #1a0b2e);
-  background-size: 140% 140%;
-  animation: raveBg 18s linear infinite;
+  background: var(--bg);
   color: var(--fg);
   font-family: "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, Monaco,
     Consolas, "Liberation Mono", "Courier New", monospace;
   line-height: 1.6;
-}
-
-body::before {
-  content: "";
-  position: fixed;
-  inset: 0;
-  pointer-events: none;
-  opacity: 0.18;
-  background: repeating-linear-gradient(
-      0deg,
-      rgba(255, 255, 255, 0.06) 0px,
-      rgba(255, 255, 255, 0.06) 1px,
-      transparent 2px,
-      transparent 6px
-    ),
-    repeating-linear-gradient(
-      90deg,
-      rgba(0, 0, 0, 0.18) 0px,
-      rgba(0, 0, 0, 0.18) 1px,
-      transparent 2px,
-      transparent 9px
-    );
-  mix-blend-mode: overlay;
 }
 
 @keyframes raveBg {
@@ -319,13 +286,6 @@ body::before {
   margin: 0 auto;
   text-align: left;
   position: relative;
-  background: rgba(0, 0, 0, 0.58);
-  border-radius: 18px;
-  border: 2px solid rgba(255, 255, 255, 0.22);
-  box-shadow: 0 0 0 6px rgba(255, 43, 214, 0.12), 0 0 0 10px rgba(33, 230, 255, 0.08),
-    0 40px 90px rgba(0, 0, 0, 0.6);
-  margin-top: 28px;
-  margin-bottom: 36px;
   will-change: transform, filter, opacity;
 }
 
@@ -334,7 +294,7 @@ body::before {
   flex-direction: column;
   gap: 16px;
   padding-bottom: 24px;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.22);
+  border-bottom: 1px solid var(--border);
 }
 
 .title-block h1 {
@@ -356,7 +316,7 @@ body::before {
 
 .section {
   padding: 24px 0;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.16);
+  border-bottom: 1px solid var(--border);
 }
 
 .section:last-of-type {
@@ -391,9 +351,8 @@ body::before {
 .label {
   display: inline-block;
   padding: 2px 6px;
-  border: 1px solid rgba(255, 255, 255, 0.35);
+  border: 1px solid var(--border);
   margin-right: 8px;
-  background: linear-gradient(90deg, rgba(255, 43, 214, 0.25), rgba(33, 230, 255, 0.2));
 }
 
 .post {
@@ -401,7 +360,6 @@ body::before {
   padding: 16px;
   display: grid;
   gap: 12px;
-  background: rgba(0, 0, 0, 0.25);
 }
 
 .post-meta {
@@ -418,16 +376,13 @@ body::before {
   border: 1px solid var(--border);
   color: var(--fg);
   text-decoration: none;
-  background: linear-gradient(90deg, rgba(255, 43, 214, 0.18), rgba(33, 230, 255, 0.12));
-  box-shadow: 0 10px 0 rgba(0, 0, 0, 0.22);
-  transition: transform 80ms ease, background 120ms ease, color 120ms ease;
+  transition: background 120ms ease, color 120ms ease;
 }
 
 .btn:hover,
 .btn:focus-visible {
-  transform: translateY(1px);
-  background: linear-gradient(90deg, rgba(183, 255, 42, 0.28), rgba(255, 122, 24, 0.22));
-  color: #fff;
+  background: var(--fg);
+  color: var(--bg);
 }
 
 .booting .page {
