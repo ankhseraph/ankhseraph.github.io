@@ -1,9 +1,13 @@
 :root {
   color-scheme: dark;
-  --bg: #050505;
-  --fg: #f5f5f5;
-  --muted: #b0b0b0;
-  --border: #f5f5f5;
+  --bg: #06030a;
+  --fg: #fbf7ff;
+  --muted: rgba(255, 255, 255, 0.72);
+  --border: rgba(255, 255, 255, 0.36);
+  --neon-a: #ff2bd6;
+  --neon-b: #21e6ff;
+  --neon-c: #b7ff2a;
+  --neon-d: #ff7a18;
 }
 
 * {
@@ -12,19 +16,65 @@
 
 body {
   margin: 0;
-  background: var(--bg);
+  background: radial-gradient(1200px 900px at 10% 10%, rgba(255, 43, 214, 0.45), transparent 55%),
+    radial-gradient(900px 700px at 90% 20%, rgba(33, 230, 255, 0.38), transparent 60%),
+    radial-gradient(900px 900px at 30% 95%, rgba(183, 255, 42, 0.28), transparent 55%),
+    radial-gradient(900px 700px at 85% 85%, rgba(255, 122, 24, 0.32), transparent 60%),
+    conic-gradient(from 40deg at 50% 50%, #1a0b2e, #0a0821, #1b0830, #08172a, #1a0b2e);
+  background-size: 140% 140%;
+  animation: raveBg 18s linear infinite;
   color: var(--fg);
   font-family: "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, Monaco,
     Consolas, "Liberation Mono", "Courier New", monospace;
   line-height: 1.6;
 }
 
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  opacity: 0.18;
+  background: repeating-linear-gradient(
+      0deg,
+      rgba(255, 255, 255, 0.06) 0px,
+      rgba(255, 255, 255, 0.06) 1px,
+      transparent 2px,
+      transparent 6px
+    ),
+    repeating-linear-gradient(
+      90deg,
+      rgba(0, 0, 0, 0.18) 0px,
+      rgba(0, 0, 0, 0.18) 1px,
+      transparent 2px,
+      transparent 9px
+    );
+  mix-blend-mode: overlay;
+}
+
+@keyframes raveBg {
+  0% {
+    background-position: 0% 0%;
+    filter: hue-rotate(0deg) saturate(1.05);
+  }
+  50% {
+    background-position: 100% 60%;
+    filter: hue-rotate(120deg) saturate(1.25);
+  }
+  100% {
+    background-position: 0% 0%;
+    filter: hue-rotate(240deg) saturate(1.05);
+  }
+}
+
 .boot-screen {
   position: fixed;
   inset: 0;
-  background: #f2f0e9;
-  color: #1f3b70;
-  font-family: "Times New Roman", Times, serif;
+  background: radial-gradient(900px 500px at 25% 30%, rgba(255, 43, 214, 0.55), transparent 60%),
+    radial-gradient(700px 550px at 70% 60%, rgba(33, 230, 255, 0.45), transparent 65%),
+    linear-gradient(135deg, #0b0712, #110b24 40%, #06030a);
+  color: #fff;
+  font-family: "Comic Sans MS", "Trebuchet MS", system-ui, sans-serif;
   z-index: 10;
   display: grid;
   place-items: center;
@@ -33,10 +83,11 @@ body {
 
 .boot-shell {
   width: min(920px, 92vw);
-  border: 1px solid #c2b9ad;
-  background: #fffef9;
+  border: 2px solid rgba(255, 255, 255, 0.45);
+  background: rgba(0, 0, 0, 0.35);
+  backdrop-filter: blur(10px);
   padding: 32px;
-  box-shadow: 0 6px 0 #c2b9ad;
+  box-shadow: 0 18px 0 rgba(255, 255, 255, 0.18), 0 20px 60px rgba(0, 0, 0, 0.55);
   display: grid;
   gap: 24px;
 }
@@ -44,12 +95,15 @@ body {
 .boot-header h1 {
   margin: 0 0 6px;
   font-size: 36px;
-  color: #1f3b70;
+  letter-spacing: 1px;
+  color: #fff;
+  text-shadow: 0 2px 0 rgba(0, 0, 0, 0.25), 0 0 18px rgba(255, 43, 214, 0.55),
+    0 0 28px rgba(33, 230, 255, 0.35);
 }
 
 .boot-header p {
   margin: 0;
-  color: #3b4b6a;
+  color: rgba(255, 255, 255, 0.85);
 }
 
 .boot-nav {
@@ -60,31 +114,33 @@ body {
 
 .boot-link {
   padding: 6px 10px;
-  border: 1px solid #1f3b70;
-  background: #e5ebf6;
-  color: #1f3b70;
+  border: 2px solid rgba(255, 255, 255, 0.5);
+  background: linear-gradient(90deg, rgba(255, 43, 214, 0.45), rgba(33, 230, 255, 0.35));
+  color: #fff;
   text-decoration: none;
   font-weight: 600;
+  text-shadow: 0 1px 0 rgba(0, 0, 0, 0.35);
 }
 
 .boot-hero {
-  border: 1px solid #d5ccb9;
+  border: 2px dashed rgba(255, 255, 255, 0.6);
   padding: 20px;
-  background: #fffaf0;
+  background: rgba(0, 0, 0, 0.25);
 }
 
 .boot-hero h2 {
   margin-top: 0;
-  color: #1f3b70;
+  color: #fff;
 }
 
 .boot-cta {
   margin-top: 12px;
   padding: 8px 16px;
-  border: 2px solid #1f3b70;
-  background: #e5ebf6;
-  color: #1f3b70;
+  border: 3px solid rgba(255, 255, 255, 0.75);
+  background: linear-gradient(90deg, rgba(183, 255, 42, 0.65), rgba(255, 122, 24, 0.55));
+  color: #07030b;
   font-weight: 700;
+  box-shadow: 0 10px 0 rgba(0, 0, 0, 0.25);
 }
 
 .boot-columns {
@@ -94,9 +150,9 @@ body {
 }
 
 .boot-card {
-  border: 1px solid #d5ccb9;
+  border: 2px solid rgba(255, 255, 255, 0.4);
   padding: 16px;
-  background: #fffaf0;
+  background: rgba(0, 0, 0, 0.22);
 }
 
 .boot-item {
@@ -141,6 +197,14 @@ body {
   padding: 48px 20px 64px;
   margin: 0 auto;
   text-align: left;
+  position: relative;
+  background: rgba(0, 0, 0, 0.58);
+  border-radius: 18px;
+  border: 2px solid rgba(255, 255, 255, 0.22);
+  box-shadow: 0 0 0 6px rgba(255, 43, 214, 0.12), 0 0 0 10px rgba(33, 230, 255, 0.08),
+    0 40px 90px rgba(0, 0, 0, 0.6);
+  margin-top: 28px;
+  margin-bottom: 36px;
 }
 
 .site-header {
@@ -148,7 +212,7 @@ body {
   flex-direction: column;
   gap: 16px;
   padding-bottom: 24px;
-  border-bottom: 1px solid var(--border);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.22);
 }
 
 .title-block h1 {
@@ -170,7 +234,7 @@ body {
 
 .section {
   padding: 24px 0;
-  border-bottom: 1px solid var(--border);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.16);
 }
 
 .section:last-of-type {
@@ -205,8 +269,9 @@ body {
 .label {
   display: inline-block;
   padding: 2px 6px;
-  border: 1px solid var(--border);
+  border: 1px solid rgba(255, 255, 255, 0.35);
   margin-right: 8px;
+  background: linear-gradient(90deg, rgba(255, 43, 214, 0.25), rgba(33, 230, 255, 0.2));
 }
 
 .post {
@@ -214,6 +279,7 @@ body {
   padding: 16px;
   display: grid;
   gap: 12px;
+  background: rgba(0, 0, 0, 0.25);
 }
 
 .post-meta {
@@ -230,13 +296,16 @@ body {
   border: 1px solid var(--border);
   color: var(--fg);
   text-decoration: none;
-  transition: background 120ms ease, color 120ms ease;
+  background: linear-gradient(90deg, rgba(255, 43, 214, 0.18), rgba(33, 230, 255, 0.12));
+  box-shadow: 0 10px 0 rgba(0, 0, 0, 0.22);
+  transition: transform 80ms ease, background 120ms ease, color 120ms ease;
 }
 
 .btn:hover,
 .btn:focus-visible {
-  background: var(--fg);
-  color: var(--bg);
+  transform: translateY(1px);
+  background: linear-gradient(90deg, rgba(183, 255, 42, 0.28), rgba(255, 122, 24, 0.22));
+  color: #fff;
 }
 
 .muted {
