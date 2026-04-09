@@ -5,56 +5,14 @@
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="description" content="ankhseraph — projects, notes, logbook" />
     <title>ankhseraph</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-      href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600&display=swap"
-      rel="stylesheet"
-    />
     <link rel="stylesheet" href="styles.css" />
     <script src="app.js" defer></script>
   </head>
-  <body class="booting">
-    <div class="boot-screen" aria-hidden="true">
-      <div class="boot-shell">
-        <header class="boot-header boot-item">
-          <h1>WELCOME TO ANKHNET 2000</h1>
-          <p>Handcrafted chaos, lightly toasted.</p>
-        </header>
-        <nav class="boot-nav">
-          <a href="#" class="boot-link boot-item">ENTER</a>
-          <a href="#" class="boot-link boot-item">GUESTBOOK</a>
-          <a href="#" class="boot-link boot-item">COOL LINKS</a>
-          <a href="#" class="boot-link boot-item">DOWNLOAD RAM</a>
-        </nav>
-        <section class="boot-hero boot-item">
-          <h2>PREMIUM VIBES</h2>
-          <p>Now with 300% more gradients and absolutely no synergy.</p>
-          <button class="boot-cta boot-item">UNLEASH</button>
-        </section>
-        <section class="boot-columns">
-          <div class="boot-card boot-item">
-            <h3>LOUD COLORS</h3>
-            <p>So bright your monitor files a complaint.</p>
-          </div>
-          <div class="boot-card boot-item">
-            <h3>BAD TASTE</h3>
-            <p>Curated with care, then dropped down stairs.</p>
-          </div>
-          <div class="boot-card boot-item">
-            <h3>MYSTERY MEAT</h3>
-            <p>It works on my machine (which is haunted).</p>
-          </div>
-        </section>
-      </div>
-    </div>
-
+  <body>
     <div class="page">
       <header class="site-header">
-        <div class="title-block">
-          <h1>ankhseraph</h1>
-          <p>projects + notes + logbook</p>
-        </div>
+        <h1>ankhseraph</h1>
+        <p>projects + notes + logbook</p>
         <nav class="site-nav">
           <a class="btn" href="#about">About</a>
           <a class="btn" href="#projects">Projects</a>
@@ -67,8 +25,13 @@
         <section id="about" class="section">
           <h2>About</h2>
           <p>
-            I build small tools, take systems apart, and write notes so future-me
-            suffers less. If it’s weird, practical, or slightly cursed, I’m into it.
+            I see programming and cybersecurity as means of achieving greater
+            freedom; by counteracting surveillance and (therefore but not only)
+            making the web more free.
+          <br>
+            I value conscious usage of every tool. I build stuff that aligns
+            with my values and I don't think there's anything more fun and
+            rewarding.
           </p>
         </section>
 
@@ -91,10 +54,8 @@
         </section>
 
         <section id="logbook" class="section">
-          <div class="section-header">
-            <h2>Logbook</h2>
-            <span class="muted">Admin: ankhseraph</span>
-          </div>
+          <h2>Logbook</h2>
+          <p class="muted">Admin: ankhseraph</p>
 
           <div id="logbook-grid" class="card-grid" aria-live="polite"></div>
         </section>
