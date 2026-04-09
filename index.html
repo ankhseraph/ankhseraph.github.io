@@ -74,12 +74,11 @@
 
         <section id="projects" class="section">
           <h2>Projects</h2>
-          <ul class="list">
-            <li>
-              <span class="label">Add</span>
-              Drop 3–5 projects here. One line each: what it is + what changed.
-            </li>
-          </ul>
+          <div id="projects-grid" class="card-grid" aria-live="polite"></div>
+          <p class="muted hint">
+            Add markdown files in <span class="label">projects/</span> (example:
+            <span class="label">EXAMPLE.md</span>).
+          </p>
         </section>
 
         <section id="logbook" class="section">
@@ -88,29 +87,11 @@
             <span class="muted">Admin: ankhseraph</span>
           </div>
 
-          <div class="empty">No entries yet.</div>
-
-          <ol class="steps">
-            <li>Copy <span class="label">posts/_template.html</span>.</li>
-            <li>Name it <span class="label">YYYY-MM-DD-title.html</span>.</li>
-            <li>Add the entry block below this list.</li>
-          </ol>
-
-          <!--
-            To add a blog entry, paste a block like this below:
-
-            <article class="post">
-              <div class="post-meta">
-                <span class="post-date">2025-04-09</span>
-                <span class="post-author">Admin: ankhseraph</span>
-              </div>
-              <h3>Post title</h3>
-              <p>A couple lines on what changed and what I learned.</p>
-              <a class="btn" href="posts/2025-04-09-post-title.html">Read</a>
-            </article>
-
-            Then create the full post in /posts/ with that filename.
-          -->
+          <div id="logbook-grid" class="card-grid" aria-live="polite"></div>
+          <p class="muted hint">
+            Add entries as <span class="label">logbook/YYYY-MM-DD.md</span>
+            (ISO 8601 date).
+          </p>
         </section>
 
         <section id="contact" class="section">
