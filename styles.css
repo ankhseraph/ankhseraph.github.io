@@ -79,6 +79,85 @@ body::before {
   display: grid;
   place-items: center;
   overflow: hidden;
+  perspective: 1100px;
+  perspective-origin: 50% 35%;
+}
+
+.boot-screen::before,
+.boot-screen::after {
+  content: "";
+  position: absolute;
+  inset: -20%;
+  pointer-events: none;
+}
+
+.boot-screen::before {
+  opacity: 0.22;
+  background: repeating-linear-gradient(
+      0deg,
+      rgba(255, 255, 255, 0.06) 0px,
+      rgba(255, 255, 255, 0.06) 1px,
+      transparent 2px,
+      transparent 7px
+    ),
+    repeating-linear-gradient(
+      90deg,
+      rgba(0, 0, 0, 0.2) 0px,
+      rgba(0, 0, 0, 0.2) 1px,
+      transparent 2px,
+      transparent 11px
+    );
+  animation: bootScan 180ms linear infinite;
+}
+
+.boot-screen::after {
+  opacity: 0;
+  background: linear-gradient(90deg, rgba(255, 0, 255, 0.25), transparent 40%, rgba(0, 255, 255, 0.22)),
+    radial-gradient(900px 500px at 40% 40%, rgba(255, 255, 255, 0.12), transparent 65%);
+  filter: blur(1px) contrast(140%) saturate(130%);
+  transform: translate3d(0, 0, 0);
+}
+
+.boot-eject .boot-screen::after,
+.boot-complete .boot-screen::after {
+  opacity: 0.95;
+  animation: bootGlitchOverlay 1.25s steps(2, end) infinite;
+}
+
+@keyframes bootScan {
+  0% {
+    transform: translate3d(0, 0, 0);
+  }
+  100% {
+    transform: translate3d(0, 10px, 0);
+  }
+}
+
+@keyframes bootGlitchOverlay {
+  0% {
+    clip-path: inset(12% 0 70% 0);
+    transform: translate3d(-12px, -4px, 0) skewX(-10deg);
+  }
+  20% {
+    clip-path: inset(44% 0 38% 0);
+    transform: translate3d(10px, 6px, 0) skewX(14deg);
+  }
+  40% {
+    clip-path: inset(66% 0 18% 0);
+    transform: translate3d(-16px, 2px, 0) skewX(-18deg);
+  }
+  60% {
+    clip-path: inset(6% 0 84% 0);
+    transform: translate3d(14px, -8px, 0) skewX(20deg);
+  }
+  80% {
+    clip-path: inset(28% 0 52% 0);
+    transform: translate3d(-8px, 10px, 0) skewX(-12deg);
+  }
+  100% {
+    clip-path: inset(52% 0 30% 0);
+    transform: translate3d(8px, -6px, 0) skewX(12deg);
+  }
 }
 
 .boot-shell {
@@ -90,6 +169,8 @@ body::before {
   box-shadow: 0 18px 0 rgba(255, 255, 255, 0.18), 0 20px 60px rgba(0, 0, 0, 0.55);
   display: grid;
   gap: 24px;
+  transform-style: preserve-3d;
+  will-change: transform, filter, opacity;
 }
 
 .boot-header h1 {
@@ -157,6 +238,7 @@ body::before {
 
 .boot-item {
   transform-origin: center;
+  will-change: transform, filter, opacity;
 }
 
 .booting .boot-item {
@@ -169,26 +251,65 @@ body::before {
 }
 
 .boot-complete .boot-item {
-  animation: fallFade 0.9s forwards;
+  animation: fallFade3d 1.15s cubic-bezier(0.1, 0.9, 0.2, 1) forwards;
 }
 
 .boot-complete .page {
   opacity: 1;
-  transition: opacity 0.6s ease 0.2s;
+  animation: pagePopIn 1.1s cubic-bezier(0.16, 0.9, 0.22, 1) 120ms both;
 }
 
 .boot-complete .boot-screen {
   pointer-events: none;
 }
 
-@keyframes fallFade {
+@keyframes fallFade3d {
   0% {
     opacity: 1;
-    transform: translateY(0) rotate(0deg);
+    transform: perspective(1100px) translate3d(0, 0, 0) rotateX(0deg) rotateY(0deg)
+      rotateZ(0deg) translateZ(0px);
+    filter: blur(0px) saturate(1.1) contrast(1.05);
   }
   100% {
     opacity: 0;
-    transform: translateY(160px) rotate(8deg);
+    transform: perspective(1100px) translate3d(0, 260px, 120px) rotateX(86deg) rotateY(-38deg)
+      rotateZ(28deg) translateZ(-380px);
+    filter: blur(8px) saturate(1.45) contrast(1.25);
+  }
+}
+
+.boot-eject .boot-shell,
+.boot-complete .boot-shell {
+  filter: drop-shadow(6px 0 0 rgba(255, 43, 214, 0.55)) drop-shadow(-6px 0 0 rgba(33, 230, 255, 0.4));
+}
+
+.boot-complete .boot-shell {
+  animation: bootEject 1.55s cubic-bezier(0.18, 0.85, 0.2, 1) forwards;
+}
+
+@keyframes bootEject {
+  0% {
+    opacity: 1;
+    transform: translate3d(0, 0, 0) rotateX(0deg) rotateY(0deg) rotateZ(0deg) scale(1);
+    filter: blur(0px) contrast(1.05) saturate(1.1);
+  }
+  22% {
+    transform: translate3d(0, -10px, 110px) rotateX(16deg) rotateY(-22deg) rotateZ(2deg) scale(1.02);
+    filter: blur(1px) contrast(1.3) saturate(1.4);
+  }
+  45% {
+    transform: translate3d(14px, 8px, 220px) rotateX(34deg) rotateY(-48deg) rotateZ(10deg) scale(1.03);
+    filter: blur(0.5px) contrast(1.45) saturate(1.5);
+  }
+  70% {
+    opacity: 0.88;
+    transform: translate3d(-18px, 64px, -120px) rotateX(74deg) rotateY(-10deg) rotateZ(26deg) scale(0.92);
+    filter: blur(3px) contrast(1.55) saturate(1.7);
+  }
+  100% {
+    opacity: 0;
+    transform: translate3d(40px, 720px, -760px) rotateX(120deg) rotateY(18deg) rotateZ(44deg) scale(0.55);
+    filter: blur(14px) contrast(1.2) saturate(1.25);
   }
 }
 
@@ -205,6 +326,7 @@ body::before {
     0 40px 90px rgba(0, 0, 0, 0.6);
   margin-top: 28px;
   margin-bottom: 36px;
+  will-change: transform, filter, opacity;
 }
 
 .site-header {
@@ -306,6 +428,76 @@ body::before {
   transform: translateY(1px);
   background: linear-gradient(90deg, rgba(183, 255, 42, 0.28), rgba(255, 122, 24, 0.22));
   color: #fff;
+}
+
+.booting .page {
+  opacity: 0;
+  transform: perspective(1200px) translate3d(0, 46px, -380px) rotateX(22deg) rotateY(-18deg)
+    rotateZ(-2deg) scale(0.92);
+  filter: blur(7px) saturate(1.4) contrast(1.2);
+}
+
+@keyframes pagePopIn {
+  0% {
+    opacity: 0;
+    transform: perspective(1200px) translate3d(0, 46px, -380px) rotateX(22deg) rotateY(-18deg)
+      rotateZ(-2deg) scale(0.92);
+    filter: blur(7px) saturate(1.4) contrast(1.2);
+    clip-path: inset(0 0 0 0);
+  }
+  18% {
+    opacity: 0.85;
+    transform: perspective(1200px) translate3d(-10px, 18px, 40px) rotateX(10deg) rotateY(16deg)
+      rotateZ(1deg) scale(1.02);
+    filter: blur(1px) saturate(1.55) contrast(1.35);
+    clip-path: inset(2% 0 88% 0);
+  }
+  28% {
+    clip-path: inset(56% 0 18% 0);
+    transform: perspective(1200px) translate3d(12px, 10px, 20px) rotateX(-6deg) rotateY(-8deg)
+      rotateZ(0deg) scale(1.01);
+  }
+  42% {
+    clip-path: inset(16% 0 58% 0);
+    transform: perspective(1200px) translate3d(-6px, 2px, 0px) rotateX(4deg) rotateY(6deg) rotateZ(0deg)
+      scale(1);
+  }
+  65% {
+    opacity: 1;
+    clip-path: inset(0 0 0 0);
+    transform: perspective(1200px) translate3d(0, 0, 0) rotateX(0deg) rotateY(0deg) rotateZ(0deg) scale(1);
+    filter: blur(0px) saturate(1.1) contrast(1.05);
+  }
+  100% {
+    opacity: 1;
+    transform: perspective(1200px) translate3d(0, 0, 0) rotateX(0deg) rotateY(0deg) rotateZ(0deg) scale(1);
+    filter: blur(0px) saturate(1) contrast(1);
+    clip-path: inset(0 0 0 0);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  body {
+    animation: none;
+  }
+
+  .boot-screen::before,
+  .boot-screen::after {
+    animation: none;
+    opacity: 0;
+  }
+
+  .boot-complete .boot-shell,
+  .boot-complete .boot-item,
+  .boot-complete .page {
+    animation: none !important;
+  }
+
+  .booting .page {
+    opacity: 0;
+    transform: none;
+    filter: none;
+  }
 }
 
 .muted {
