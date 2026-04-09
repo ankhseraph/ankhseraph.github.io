@@ -1,1 +1,88 @@
-<h1>test</h1>
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content="ankhseraph — CV + project logbook" />
+    <title>ankhseraph</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <div class="page">
+      <header class="site-header">
+        <div class="title-block">
+          <h1>ankhseraph</h1>
+          <p>CV + project logbook + IT notes</p>
+        </div>
+        <nav class="site-nav">
+          <a class="btn" href="#about">About</a>
+          <a class="btn" href="#projects">Projects</a>
+          <a class="btn" href="#logbook">Logbook</a>
+          <a class="btn" href="#contact">Contact</a>
+        </nav>
+      </header>
+
+      <main>
+        <section id="about" class="section">
+          <h2>About</h2>
+          <p>
+            Short summary for your CV. Keep it tight: your focus, your strengths,
+            and the kind of work you do.
+          </p>
+        </section>
+
+        <section id="projects" class="section">
+          <h2>Projects</h2>
+          <ul class="list">
+            <li>
+              <span class="label">Add</span>
+              Highlight 3–5 core projects with one-line outcomes.
+            </li>
+          </ul>
+        </section>
+
+        <section id="logbook" class="section">
+          <div class="section-header">
+            <h2>Logbook</h2>
+            <span class="muted">Admin: ankhseraph</span>
+          </div>
+
+          <div class="empty">No entries yet.</div>
+
+          <!--
+            To add a blog entry, paste a block like this below:
+
+            <article class="post">
+              <div class="post-meta">
+                <span class="post-date">2025-04-09</span>
+                <span class="post-author">Admin: ankhseraph</span>
+              </div>
+              <h3>Post title</h3>
+              <p>Short summary of what you did and why it matters.</p>
+              <a class="btn" href="posts/2025-04-09-post-title.html">Read</a>
+            </article>
+
+            Then create the full post in /posts/ with that filename.
+          -->
+        </section>
+
+        <section id="contact" class="section">
+          <h2>Contact</h2>
+          <p>
+            Add your preferred contact(s): email, Codeberg, GitHub, LinkedIn.
+          </p>
+        </section>
+      </main>
+
+      <footer class="site-footer">
+        <span>Last updated: <span class="muted">manual</span></span>
+      </footer>
+    </div>
+  </body>
+</html>
