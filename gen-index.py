@@ -8,6 +8,7 @@ from pathlib import Path
 
 
 ROOT = Path(__file__).resolve().parent
+OVERVIEW_DIR = ROOT / "overview"
 PROJECTS_DIR = ROOT / "projects"
 LOGBOOK_DIR = ROOT / "logbook"
 
@@ -34,6 +35,9 @@ def write_index(directory: Path, names: list[str]) -> None:
 
 
 def main() -> int:
+    overview = ["OVERVIEW.md"] if (OVERVIEW_DIR / "OVERVIEW.md").is_file() else []
+    write_index(OVERVIEW_DIR, overview)
+
     projects = [name for name in list_md_files(PROJECTS_DIR) if name != "index.json"]
     write_index(PROJECTS_DIR, projects)
 
@@ -41,6 +45,7 @@ def main() -> int:
     logbook.sort(reverse=True)
     write_index(LOGBOOK_DIR, logbook)
 
+    print(f"Wrote {OVERVIEW_DIR / 'index.json'} ({len(overview)} entries)")
     print(f"Wrote {PROJECTS_DIR / 'index.json'} ({len(projects)} entries)")
     print(f"Wrote {LOGBOOK_DIR / 'index.json'} ({len(logbook)} entries)")
     return 0
@@ -48,4 +53,3 @@ def main() -> int:
 
 if __name__ == "__main__":
     raise SystemExit(main())
-

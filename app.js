@@ -59,6 +59,28 @@ async function loadCards({ kind, containerId, basePath }) {
     const indexJson = await indexResponse.json();
     files = sortFiles(kind, indexJson).filter((name) => !isHiddenFile(name));
   } catch (_error) {
+    if (kind === "overview") {
+      const fallbackFile = `${basePath}/OVERVIEW.md`;
+      try {
+        const response = await fetch(fallbackFile, { cache: "no-store" });
+        if (response.ok) {
+          const markdown = await response.text();
+          const description = extractDescription(markdown) || "";
+          container.innerHTML = "";
+          const card = document.createElement("a");
+          card.className = "md-card";
+          card.href = `md.html?file=${encodeURIComponent(fallbackFile)}`;
+          card.innerHTML = `
+            <div class="md-card-title">OVERVIEW.md</div>
+            <div class="md-card-desc">${escapeHtml(description)}</div>
+          `;
+          container.appendChild(card);
+          return;
+        }
+      } catch (_fallbackError) {
+        // Fall through to empty state.
+      }
+    }
     container.innerHTML = `<div class="muted">No ${escapeHtml(kind)} yet.</div>`;
     return;
   }
@@ -96,6 +118,7 @@ async function loadCards({ kind, containerId, basePath }) {
 }
 
 window.addEventListener("load", () => {
+  loadCards({ kind: "overview", containerId: "#overview-grid", basePath: "overview" });
   loadCards({ kind: "projects", containerId: "#projects-grid", basePath: "projects" });
   loadCards({ kind: "logbook", containerId: "#logbook-grid", basePath: "logbook" });
 });
