@@ -1,6 +1,6 @@
 # This very profile
 
-I've been programming somewhat consistenly since age 10. I never properly took the time to learn to use Git or to aggregate my works, matter of fact, most are still lost. But, as of a few days ago, I tried. I obviously put everything in one GitHub/Codeberg profile (depending on where you're reading this) but I wanted to do something a little bit cooler.
+I've been programming somewhat consistently since age 10. I never properly took the time to learn to use Git or to aggregate my works, matter of fact, most are still lost. But, as of a few days ago, I tried. I obviously put everything in one GitHub/Codeberg profile (depending on where you're reading this) but I wanted to do something a little bit cooler.
 
 ## The auto updating script
 
